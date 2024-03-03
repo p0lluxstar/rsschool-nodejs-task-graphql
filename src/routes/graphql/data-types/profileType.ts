@@ -14,7 +14,7 @@ export interface InterfaceProfileType {
     /* memberType?: IMemberType; */
   }
 
-const ProfileType = new GraphQLObjectType<InterfaceProfileType>({
+export const ProfileType = new GraphQLObjectType<InterfaceProfileType>({
     name: 'Profile',
     fields: () => ({
       id: { type: UUIDType },
@@ -30,5 +30,3 @@ const ProfileType = new GraphQLObjectType<InterfaceProfileType>({
       },
     }),
   });
-
-export default ProfileType;

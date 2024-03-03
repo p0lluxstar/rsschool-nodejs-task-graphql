@@ -1,7 +1,7 @@
 import { GraphQLFloat, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLOutputType } from "graphql";
 import { PrismaClientUtils } from "../utils/prismaClientUtils.js";
 import { UUIDType } from '../types/uuid.js';
-import ProfileType from "./profileType.js";
+import { ProfileType } from "./profileType.js";
 
 export interface InterfaceUser {
     id: string;

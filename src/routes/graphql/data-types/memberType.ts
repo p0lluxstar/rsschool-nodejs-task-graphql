@@ -1,5 +1,5 @@
 import { GraphQLEnumType, GraphQLObjectType, GraphQLFloat, GraphQLInt, GraphQLList } from "graphql";
-import ProfileType from "./profileType.js";
+import { ProfileType } from "./profileType.js";
 
 export interface InterfaceMemberType {
     id: string;
