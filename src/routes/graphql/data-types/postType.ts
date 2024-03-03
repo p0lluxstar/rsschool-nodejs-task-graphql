@@ -11,7 +11,8 @@ export interface InterfacePost {
   }
 
 export const PostType = new GraphQLObjectType<InterfacePost>({
-    name: 'Post',
+    name: 'PostType',
+    description: 'PostType',
     fields: () => ({
       id: { type: UUIDType },
       title: { type: GraphQLString },

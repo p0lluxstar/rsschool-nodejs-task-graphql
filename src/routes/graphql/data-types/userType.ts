@@ -1,7 +1,8 @@
-import { GraphQLFloat, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLOutputType } from "graphql";
+import { GraphQLFloat, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLOutputType } from "graphql";
 import { PrismaClientUtils } from "../utils/prismaClientUtils.js";
 import { UUIDType } from '../types/uuid.js';
 import { ProfileType } from "./profileType.js";
+import { PostType } from "./postType.js";
 
 export interface InterfaceUser {
     id: string;
@@ -14,7 +15,8 @@ export interface InterfaceUser {
   }
 
 export const UserType = new GraphQLObjectType<InterfaceUser>({
-    name: 'User',
+    name: 'UserType',
+    description: 'UserType',
     fields: () => ({
       id: { type: UUIDType },
       name: { type: GraphQLString },
@@ -25,32 +27,32 @@ export const UserType = new GraphQLObjectType<InterfaceUser>({
           await PrismaClientUtils.profile.findFirst({ where: { userId: id } }),
       },
   
-  /*     posts: {
+       posts: {
         type: new GraphQLList(PostType),
-        resolve: async ({ id }: IUser) =>
-          await prisma.post.findMany({ where: { authorId: id } }),
-      }, */
+        resolve: async ({ id }: InterfaceUser) =>
+          await PrismaClientUtils.post.findMany({ where: { authorId: id } }),
+      }, 
   
-   /*    userSubscribedTo: {
+       userSubscribedTo: {
         type: new GraphQLList(UserType),
-        resolve: async ({ id }: IUser) => {
-          const data = await prisma.subscribersOnAuthors.findMany({
+        resolve: async ({ id }: InterfaceUser) => {
+          const data = await PrismaClientUtils.subscribersOnAuthors.findMany({
             where: { subscriberId: id },
             select: { author: true },
           });
           return data.map(({ author }) => author);
         },
-      }, */
+      }, 
   
-     /*  subscribedToUser: {
+       subscribedToUser: {
         type: new GraphQLList(UserType),
-        resolve: async ({ id }: IUser) => {
-          const data = await prisma.subscribersOnAuthors.findMany({
+        resolve: async ({ id }: InterfaceUser) => {
+          const data = await PrismaClientUtils.subscribersOnAuthors.findMany({
             where: { authorId: id },
             select: { subscriber: true },
           });
           return data.map(({ subscriber }) => subscriber);
         },
-      }, */
+      }, 
     }),
   });

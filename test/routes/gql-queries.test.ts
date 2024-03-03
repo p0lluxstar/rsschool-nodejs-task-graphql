@@ -142,7 +142,6 @@ await test('gql-queries', async (t) => {
     t.ok(data.userWithNullProfile.profile === null);
   });
 
-  /*
   await t.test('Get user/users with his/their posts, profile, memberType.', async (t) => {
     const { body: user1 } = await createUser(app);
     const { body: post1 } = await createPost(app, user1.id);
@@ -239,5 +238,5 @@ await test('gql-queries', async (t) => {
     t.ok(data.user.subscribedToUser[0].id === user3.id);
     t.ok(data.user.subscribedToUser[0].name === user3.name);
     t.ok(data.user.subscribedToUser[0].userSubscribedTo[0].id === user1.id);
-  }); */
+  });
 });
