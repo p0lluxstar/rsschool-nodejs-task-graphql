@@ -1,5 +1,5 @@
 import { GraphQLFloat, GraphQLObjectType, GraphQLString, GraphQLList, GraphQLOutputType } from "graphql";
-import { PrismaClientUtils } from "../utils/prismaClientUtils.js";
+import { PrismaClientUtil } from "../utils/prismaClientUtils.js";
 import { UUIDType } from '../types/uuid.js';
 import { ProfileType } from "./profileType.js";
 import { PostType } from "./postType.js";
@@ -14,7 +14,10 @@ export interface InterfaceUser {
     subscribedToUser?: ISubscribersOnAuthors[]; */
   }
 
+const postTypeList = new GraphQLList(PostType);
+
 export const UserType = new GraphQLObjectType<InterfaceUser>({
+
     name: 'UserType',
     description: 'UserType',
     fields: () => ({
@@ -22,37 +25,33 @@ export const UserType = new GraphQLObjectType<InterfaceUser>({
       name: { type: GraphQLString },
       balance: { type: GraphQLFloat },
       profile: {
-        type: ProfileType as GraphQLOutputType,
-        resolve: async ({ id }: InterfaceUser) =>
-          await PrismaClientUtils.profile.findFirst({ where: { userId: id } }),
+        type: <GraphQLOutputType> ProfileType,
+        resolve: async ({ id }: InterfaceUser) => await PrismaClientUtil.profile.findFirst({ where: { userId: id } }),
       },
   
        posts: {
-        type: new GraphQLList(PostType),
-        resolve: async ({ id }: InterfaceUser) =>
-          await PrismaClientUtils.post.findMany({ where: { authorId: id } }),
+        type: postTypeList,
+        resolve: async ({ id }: InterfaceUser) => await PrismaClientUtil.post.findMany({ where: { authorId: id } }),
       }, 
   
        userSubscribedTo: {
         type: new GraphQLList(UserType),
-        resolve: async ({ id }: InterfaceUser) => {
-          const data = await PrismaClientUtils.subscribersOnAuthors.findMany({
-            where: { subscriberId: id },
-            select: { author: true },
-          });
-          return data.map(({ author }) => author);
-        },
+        resolve: async ({ id }: InterfaceUser) => await PrismaClientUtil.subscribersOnAuthors
+        .findMany({
+          where: { subscriberId: id },
+          select: { author: true },
+        })
+        .then(data => data.map(({author}) => author)),
       }, 
   
        subscribedToUser: {
         type: new GraphQLList(UserType),
-        resolve: async ({ id }: InterfaceUser) => {
-          const data = await PrismaClientUtils.subscribersOnAuthors.findMany({
+        resolve: async ({ id }: InterfaceUser) => await PrismaClientUtil.subscribersOnAuthors
+        .findMany({
             where: { authorId: id },
             select: { subscriber: true },
-          });
-          return data.map(({ subscriber }) => subscriber);
-        },
+        })
+        .then(data => data.map(({ subscriber }) => subscriber)),
       }, 
     }),
   });

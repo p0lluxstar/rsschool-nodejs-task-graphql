@@ -8,6 +8,8 @@ export interface InterfaceMemberType {
     /* profiles?: IProfile[]; */
   }
 
+const profileTypeList = new GraphQLList(ProfileType)
+
 export const MemberType = new GraphQLObjectType<InterfaceMemberType>({
     name: 'MemberType',
     description: 'MemberType',
@@ -18,6 +20,6 @@ export const MemberType = new GraphQLObjectType<InterfaceMemberType>({
         },
       discount: { type: GraphQLFloat },
       postsLimitPerMonth: { type: GraphQLInt },
-      profiles: { type: new GraphQLList(ProfileType) },
+      profiles: { type: profileTypeList },
     }),
   });

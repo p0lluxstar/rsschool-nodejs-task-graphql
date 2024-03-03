@@ -18,6 +18,6 @@ export const PostType = new GraphQLObjectType<InterfacePost>({
       title: { type: GraphQLString },
       content: { type: GraphQLString },
       authorId: { type: GraphQLString },
-      author: { type: UserType as GraphQLOutputType },
+      author: { type: <GraphQLOutputType> UserType},
     }),
   });

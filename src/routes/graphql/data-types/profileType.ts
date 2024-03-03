@@ -1,7 +1,7 @@
 import { GraphQLBoolean, GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList, GraphQLOutputType } from "graphql";
 import { MemberType} from "./memberType.js";
 import { UUIDType } from '../types/uuid.js';
-import { PrismaClientUtils } from "../utils/prismaClientUtils.js";
+import { PrismaClientUtil } from "../utils/prismaClientUtils.js";
 import { UserType } from "./userType.js";
 
 export interface InterfaceProfileType {
@@ -23,14 +23,13 @@ export const ProfileType = new GraphQLObjectType<InterfaceProfileType>({
       yearOfBirth: { type: GraphQLInt },
       userId: { type: GraphQLString },
       user: { type: new GraphQLList(UserType) },
-      memberTypeId:  {
+      memberTypeId: {
         type: GraphQLString,
         enumValues: ['basic', 'business'],
         },
       memberType: {
-        type: MemberType as GraphQLOutputType,
-        resolve: async ({ memberTypeId }: InterfaceProfileType) =>
-          await PrismaClientUtils.memberType.findFirst({ where: { id: memberTypeId } }),
+        type: <GraphQLOutputType> MemberType,
+        resolve: async ({ memberTypeId }: InterfaceProfileType) => await PrismaClientUtil.memberType.findFirst({ where: { id: memberTypeId } }),
       },
     }),
   });
