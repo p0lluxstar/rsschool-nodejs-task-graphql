@@ -4,7 +4,7 @@ import { UUIDType } from '../types/uuid.js';
 import { PrismaClientUtil } from "../utils/prismaClientUtils.js";
 import { UserType } from "./userType.js";
 
-export interface InterfaceProfileType {
+interface InterfaceProfileType {
     id: string;
     isMale: boolean;
     yearOfBirth: number;

@@ -4,11 +4,11 @@ import { UUIDType } from '../types/uuid.js';
 import { ProfileType } from "./profileType.js";
 import { PostType } from "./postType.js";
 
-export interface InterfaceUser {
+interface InterfaceUser {
     id: string;
     name: string;
     balance: number;
-  }
+}
 
 const postTypeList = new GraphQLList(PostType);
 

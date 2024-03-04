@@ -2,7 +2,7 @@ import { GraphQLString, GraphQLObjectType, GraphQLOutputType } from "graphql";
 import { UserType } from "./userType.js";
 import { UUIDType } from '../types/uuid.js';
 
-export interface InterfacePost {
+interface InterfacePost {
     id: string;
     title: string;
     content: string;

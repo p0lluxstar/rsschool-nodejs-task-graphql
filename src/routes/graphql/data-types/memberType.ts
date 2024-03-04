@@ -1,11 +1,11 @@
 import { GraphQLObjectType, GraphQLFloat, GraphQLInt, GraphQLList,GraphQLString } from "graphql";
 import { ProfileType } from "./profileType.js";
 
-export interface InterfaceMemberType {
+interface InterfaceMemberType {
     id: string;
     discount: number;
     postsLimitPerMonth: number;
-  }
+}
 
 const profileTypeList = new GraphQLList(ProfileType)
 

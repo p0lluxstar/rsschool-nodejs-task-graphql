@@ -2,10 +2,10 @@ import { GraphQLObjectType, GraphQLNonNull, GraphQLList, GraphQLOutputType } fro
 import { UUIDType } from "../types/uuid.js";
 import { UserType } from "./userType.js";
 
-export interface InterfaceSubOnAuthors {
+interface InterfaceSubOnAuthors {
     subscriberId: string;
     authorId: string;
-  }
+}
 
 export const SubOnAuthorsType = new GraphQLObjectType<InterfaceSubOnAuthors>({
     name: 'SubOnAuthorsType',
