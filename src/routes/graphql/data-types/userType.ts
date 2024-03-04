@@ -8,10 +8,6 @@ export interface InterfaceUser {
     id: string;
     name: string;
     balance: number;
-/*     profile?: IProfile;
-    posts?: IPost[];
-    userSubscribedTo?: ISubscribersOnAuthors[];
-    subscribedToUser?: ISubscribersOnAuthors[]; */
   }
 
 const postTypeList = new GraphQLList(PostType);
@@ -26,12 +22,20 @@ export const UserType = new GraphQLObjectType<InterfaceUser>({
       balance: { type: GraphQLFloat },
       profile: {
         type: <GraphQLOutputType> ProfileType,
-        resolve: async ({ id }: InterfaceUser) => await PrismaClientUtil.profile.findFirst({ where: { userId: id } }),
+        resolve: ({ id }: InterfaceUser) => PrismaClientUtil.profile
+        .findFirst({ where: { userId: id } })
+        .then(result => {
+            return result;
+        }),
       },
   
        posts: {
         type: postTypeList,
-        resolve: async ({ id }: InterfaceUser) => await PrismaClientUtil.post.findMany({ where: { authorId: id } }),
+        resolve: ({ id }: InterfaceUser) => PrismaClientUtil.post
+        .findMany({ where: { authorId: id } })
+        .then(result => {
+            return result;
+        }),
       }, 
   
        userSubscribedTo: {
